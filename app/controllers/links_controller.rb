@@ -27,6 +27,8 @@ class LinksController < ApplicationController
   end
 
   def set_link
-    @link = current_user.links.find_by(id: Base62.decode(params[:id]))
+    @link = current_user.links.find_by_id_param!(params[:id])
+  rescue ArgumentError, NoMethodError
+    raise ActiveRecord::RecordNotFound
   end
 end
