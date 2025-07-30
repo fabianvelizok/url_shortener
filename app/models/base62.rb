@@ -17,8 +17,14 @@ class Base62
   end
 
   def self.decode(string)
+    result = 0
+
+    string.reverse.each_char.with_index do |char, index|
+      power = BASE**index # 62^0, 62^1, 62^2, ...
+      index = ALPHABET.index(char)
+      result += index * power
+    end
+
+    result
   end
 end
-
-# Base62.encode(1024)
-# Base62.decode("xt")
