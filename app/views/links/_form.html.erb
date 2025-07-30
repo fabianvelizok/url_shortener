@@ -1,0 +1,8 @@
+<%= form_with model:, class: "flex flex-col" do |f| %>
+  <div class="mb-3">
+    <%= f.label :url %>
+    <%= f.text_field :url, placeholder: "https://example.org", class: "w-full border border-gray-300 p-2 rounded" %>
+  </div>
+
+  <%= f.submit nil, class: "bg-blue-500 text-white p-2 rounded" %>
+<% end %>
