@@ -1,4 +1,6 @@
 class LinksController < ApplicationController
+  before_action :set_link, only: [ :show ]
+
   def index
     @links = current_user.links
     @link = Link.new
@@ -15,9 +17,16 @@ class LinksController < ApplicationController
     end
   end
 
+  def show
+  end
+
   private
 
   def link_params
     params.require(:link).permit(:url)
+  end
+
+  def set_link
+    @link = current_user.links.find_by(id: Base62.decode(params[:id]))
   end
 end

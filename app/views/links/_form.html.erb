@@ -2,7 +2,7 @@
   <%= render "shared/form_errors", model: f.object %>
 
   <div class="mb-3">
-    <%= f.text_field :url, placeholder: "https://example.org", class: "w-full border border-gray-300 p-2 rounded" %>
+    <%= f.text_field :url, placeholder: "https://example.org", autofocus: true, class: "w-full border border-gray-300 p-2 rounded" %>
   </div>
 
   <%= f.submit nil, class: "bg-blue-500 text-white p-2 rounded" %>
