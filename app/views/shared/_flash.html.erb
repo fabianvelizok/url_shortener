@@ -1,2 +1,8 @@
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<div class="text-center">
+  <% if notice %>
+    <p class="notice bg-green-300 shadow-md p-2"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <p class="alert bg-red-300 shadow-md p-2"><%= alert %></p>
+  <% end %>
+</div>

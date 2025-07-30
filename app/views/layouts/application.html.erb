@@ -23,15 +23,15 @@
   </head>
 
   <body>
-    <header class="bg-gradient-to-r from-green-400 to-indigo-500 mb-5">
+    <header class="bg-gradient-to-r from-green-400 to-indigo-500">
       <div class="container mx-auto">
         <%= link_to "URL Shortener", root_path, class: "py-5 flex" %>
       </div>
     </header>
 
-    <main class="container mx-auto px-5 flex">
-      <%= render "shared/flash" %>
-  
+    <%= render "shared/flash" %>
+    
+    <main class="container mx-auto px-5 flex mt-5">
       <%= yield %>
     </main>
   </body>
