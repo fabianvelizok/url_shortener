@@ -10,6 +10,7 @@ class LinksController < ApplicationController
     if @link.save
       redirect_to root_path, notice: "Link was successfully created."
     else
+      @links = current_user.links
       render :index, status: :unprocessable_entity
     end
   end
