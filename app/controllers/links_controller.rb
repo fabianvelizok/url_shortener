@@ -1,7 +1,9 @@
 class LinksController < ApplicationController
+  before_action :set_link, only: [ :show, :edit, :update ]
+
   def index
     @links = current_user.links
-    @link = Link.new
+    @link ||= Link.new
   end
 
   def create
@@ -10,12 +12,23 @@ class LinksController < ApplicationController
     if @link.save
       redirect_to root_path, notice: "Link was successfully created."
     else
-      @links = current_user.links
+      index
       render :index, status: :unprocessable_entity
     end
   end
 
   def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @link.update(link_params)
+      redirect_to @link, notice: "Link was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
