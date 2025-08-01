@@ -4,7 +4,6 @@
   <%= render "form", model: @link %>
 
   <div class="flex flex-col mt-6">
-    <h2 class="text-xl font-semibold mb-3">Recent Links</h2>
     <%= render @links.ordered, link: @link %>
   </div>
 </div>

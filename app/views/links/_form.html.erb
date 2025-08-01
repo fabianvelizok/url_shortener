@@ -1,9 +1,8 @@
 <%= form_with model:, class: "flex flex-col" do |f| %>
   <%= render "shared/form_errors", model: f.object %>
 
-  <div class="mb-3">
+  <div class="mb-3 flex gap-2">
     <%= f.text_field :url, placeholder: "https://example.org", autofocus: true, class: "w-full border border-gray-300 p-2 rounded" %>
+    <%= f.submit "Save", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
   </div>
-
-  <%= f.submit nil, class: "bg-blue-500 text-white p-2 rounded" %>
 <% end %>

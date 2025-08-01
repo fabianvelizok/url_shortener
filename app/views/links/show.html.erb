@@ -1,7 +1,31 @@
 <div class="mx-auto max-w-[30rem] flex flex-col flex-grow">
-  <h1 class="text-xl font-semibold mb-3">URL Shortener</h1>
+  <div class="flex items-center justify-between mb-3">
+    <h1 class="text-xl font-semibold">Link Details</h1>
+  </div>
 
-  <p class="text-lg text-gray-600"><%= @link.url %></p>
+  <%= link_to @link.url, @link.url, target: :_blank, data: { turbo: false }, class: "text-lg mb-3 text-gray-600 hover:underline" %>
+  
+  <div class="mb-3 text-gray-600">
+    <%= pluralize(@link.views_count, "view") %>
+  </div>
 
-  <%= line_chart @link.views.group_by_day(:created_at, range: 2.weeks.ago..Time.now).count %>
+  <div class="flex gap-2 mb-3">
+    <span class="text-gray-600">Redirect URL:</span>
+    <%= link_to view_path(@link), target: :_blank, data: { turbo: false }, class: "text-blue-500 flex items-center gap-2 mb-3" do %>
+      <span><%= @link.url %></span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+      </svg>
+    <% end %>
+  </div>
+
+  <div class="mb-6">
+    <%= line_chart @link.views.group_by_day(:created_at, range: 2.weeks.ago..Time.now).count %>
+    <p class="text-sm text-gray-400 mb-4 mt-4">This chart shows the number of views for the link over the past two weeks.</p>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <%= link_to "Back", links_path, class: "bg-gray-500 text-sm text-white px-2 py-1 rounded hover:bg-gray-700" %>
+    <%= link_to "Edit", edit_link_path(@link), class: "bg-blue-500 text-sm text-white px-2 py-1 rounded hover:bg-blue-700" %>
+  </div>
 </div>
