@@ -1,0 +1,17 @@
+<% if link.has_metadata? %>
+  <div class="flex gap-4">
+    <% if link.image.present? %>
+      <div class="flex-shrink-0">
+        <%= image_tag link.image, class: "w-24 h-24 object-cover rounded", onerror: "this.style.display='none'" %>
+      </div>
+    <% end %>
+    <div class="flex-1">
+      <% if link.title.present? %>
+        <h3 class="font-semibold text-gray-900 mb-1"><%= link.title %></h3>
+      <% end %>
+      <% if link.description.present? %>
+        <p class="text-gray-600 text-sm line-clamp-2"><%= link.description %></p>
+      <% end %>
+    </div>
+  </div>
+<% end %>

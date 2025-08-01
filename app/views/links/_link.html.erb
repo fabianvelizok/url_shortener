@@ -1,13 +1,20 @@
-<div id="<%= dom_id(link) %>" class="text-base mb-2 flex justify-between gap-3">
-  <%= link_to view_path(link), target: :_blank, data: { turbo: false }, class: "text-blue-500 flex items-center gap-2" do %>
-    <%= image_tag favicon_url(link.domain) %>
-    <span><%= link.url %></span>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-    </svg>
-  <% end %>
-  <div class="flex items-center gap-4">
-    <span class="text-gray-500"><%= pluralize(link.views_count, "view") %></span>
-    <%= link_to "Show", link, class: "bg-blue-500 text-sm text-white px-2 py-1 rounded hover:bg-blue-700" %>
+<div id="<%= dom_id(link) %>" class="border rounded-lg p-4 mb-4 bg-white shadow-sm">
+  <div class="flex justify-between items-start gap-3 mb-3">
+    <div class="flex-1">
+      <%= link_to view_path(link), target: :_blank, data: { turbo: false }, class: "text-blue-500 hover:text-blue-700 flex items-center gap-2 mb-2" do %>
+        <%= image_tag favicon_url(link.domain), class: "w-4 h-4" %>
+        <span class="font-medium"><%= view_url(link) %></span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+        </svg>
+      <% end %>
+      <p class="text-gray-600 text-sm mb-2"><%= link.url %></p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-gray-500 text-sm"><%= pluralize(link.views_count, "view") %></span>
+      <%= link_to "Show", link, class: "bg-blue-500 text-sm text-white px-3 py-1 rounded hover:bg-blue-700" %>
+    </div>
   </div>
+  
+  <%= render "metadata", link: %>
 </div>

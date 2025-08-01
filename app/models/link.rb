@@ -28,4 +28,8 @@ class Link < ApplicationRecord
   def strip_url
     self.url = url&.strip
   end
+
+  def has_metadata?
+    title || description || image
+  end
 end
