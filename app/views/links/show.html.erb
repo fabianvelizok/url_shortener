@@ -2,4 +2,6 @@
   <h1 class="text-xl font-semibold mb-3">URL Shortener</h1>
 
   <p class="text-lg text-gray-600"><%= @link.url %></p>
+
+  <%= line_chart @link.views.group_by_day(:created_at, range: 2.weeks.ago..Time.now).count %>
 </div>

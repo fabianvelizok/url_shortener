@@ -1,5 +1,6 @@
 class Link < ApplicationRecord
   belongs_to :user
+  has_many :views, dependent: :destroy
 
   scope :ordered, -> { order(created_at: :desc) }
   scope :by_id_param, ->(id) { where(id: Base62.decode(id.to_s)) }
