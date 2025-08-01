@@ -14,4 +14,8 @@ class Link < ApplicationRecord
   def self.find_by_id_param!(id)
     by_id_param(id).take!
   end
+
+  def domain
+    URI(url).host
+  end
 end
