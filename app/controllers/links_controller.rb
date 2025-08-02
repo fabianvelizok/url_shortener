@@ -12,7 +12,10 @@ class LinksController < ApplicationController
     if @link.save
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Link was successfully created." }
-        format.turbo_stream { render turbo_stream: turbo_stream.prepend("links", @link) }
+        format.turbo_stream { render turbo_stream: [
+          turbo_stream.prepend("links", @link),
+          turbo_stream.replace("link_form", partial: "links/form", locals: { model: Link.new })
+        ] }
       end
     else
       index
