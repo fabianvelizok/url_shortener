@@ -3,6 +3,12 @@ class MetadataJob < ApplicationJob
 
   def perform(id)
     link = Link.find_by_id_param!(id)
-    link.update Metadata.retrieve_from(link.url).attributes
+    metadata = Metadata.retrieve_from(link.url)
+
+    if link.update(metadata.attributes)
+      link.broadcast_replace_to([ link.user, "links" ])
+    end
+  rescue => e
+    Rails.logger.error "MetadataJob failed for Link ID #{id}: #{e.message}"
   end
 end

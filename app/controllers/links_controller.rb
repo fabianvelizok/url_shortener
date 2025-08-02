@@ -10,7 +10,10 @@ class LinksController < ApplicationController
     @link = current_user.links.new(link_params)
 
     if @link.save
-      redirect_to root_path, notice: "Link was successfully created."
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "Link was successfully created." }
+        format.turbo_stream { render turbo_stream: turbo_stream.prepend("links", @link) }
+      end
     else
       index
       render :index, status: :unprocessable_entity

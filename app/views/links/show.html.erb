@@ -8,7 +8,7 @@
   </div>
 
   <div class="mb-3">
-    <%= render "metadata", link: @link %>
+    <%= render "links/metadata", link: @link %>
   </div>
 
   <%= link_to @link.url, @link.url, target: :_blank, data: { turbo: false }, class: "text-lg mb-3 text-blue-600 hover:underline block" %>

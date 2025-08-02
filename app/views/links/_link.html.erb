@@ -1,4 +1,6 @@
 <div id="<%= dom_id(link) %>" class="border rounded-lg p-4 mb-4 bg-white shadow-sm">
+  <%= turbo_stream_from link %>
+
   <div class="flex justify-between items-start gap-3 mb-3">
     <div class="flex-1">
       <%= link_to view_path(link), target: :_blank, data: { turbo: false }, class: "text-blue-500 hover:text-blue-700 flex items-center gap-2 mb-2" do %>
@@ -16,5 +18,5 @@
     </div>
   </div>
   
-  <%= render "metadata", link: %>
+  <%= render "links/metadata", link: %>
 </div>
