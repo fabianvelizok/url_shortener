@@ -60,3 +60,5 @@ gem "devise", "~> 4.9"
 gem "chartkick"
 
 gem "groupdate", "~> 6.7"
+
+gem "sucker_punch", "~> 3.2"
