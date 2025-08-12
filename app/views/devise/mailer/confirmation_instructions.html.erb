@@ -1,5 +1,9 @@
-<p>Welcome <%= @email %>!</p>
+<div class="max-w-md mx-auto my-10 p-6 bg-white rounded shadow text-gray-800 font-sans">
+  <p class="text-lg mb-4">Welcome <%= @email %>!</p>
 
-<p>You can confirm your account email through the link below:</p>
+  <p class="mb-4">You can confirm your account email through the link below:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+  <p>
+    <%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token), class: "inline-block bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition" %>
+  </p>
+</div>
