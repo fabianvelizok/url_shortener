@@ -1,17 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  url: MyString
-  title: MyString
-  description: MyString
-  image: MyString
+  url: https://google.com
+  title: Google
+  description: Search engine
+  image: 
   views_count: 1
   user: one
 
 two:
-  url: MyString
-  title: MyString
-  description: MyString
-  image: MyString
-  views_count: 1
+  url: https://www.wikipedia.org/
+  title: Wikipedia
+  description: Wikipedia is a free online encyclopedia
+  image: 
+  views_count: 2
   user: two

@@ -1,7 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-one: {
-  email: 'user-one@shortener.com'
-}
-two: {
-  email: 'user-two@shortener.com'
-}
+one:
+  email: 'user1@shortener.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  
+two:
+  email: 'user2@shortener.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
