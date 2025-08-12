@@ -26,8 +26,16 @@
 
   <body>
     <header class="bg-gradient-to-r from-green-400 to-indigo-500">
-      <div class="container mx-auto">
+      <div class="container mx-auto px-4 py-3 flex items-center justify-between">
         <%= link_to "URL Shortener", root_path, class: "py-5 flex" %>
+        <nav class="flex items-center gap-2">
+          <% if user_signed_in? %>
+            <span class="text-white"><%= current_user.email %></span>
+            <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "text-sm text-white rounded-lg border px-3 py-2 hover:text-gray-200" %>
+          <% else %>
+            <%= link_to "Sign in", new_user_session_path, class: "text-sm text-white rounded-lg border px-3 py-2 hover:text-gray-200" %>
+          <% end %>
+        </nav>
       </div>
     </header>
 
