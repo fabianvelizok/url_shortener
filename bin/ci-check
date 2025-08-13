@@ -1,0 +1,39 @@
+#!/bin/bash
+
+echo "🔍 Running CI checks locally..."
+echo "================================"
+
+echo "📊 1. Running Brakeman security scan..."
+if ! bin/brakeman --no-pager; then
+    echo "❌ Brakeman failed!"
+    exit 1
+fi
+echo "✅ Brakeman passed!"
+echo ""
+
+echo "🔍 2. Running Importmap audit..."
+if ! bin/importmap audit; then
+    echo "❌ Importmap audit failed!"
+    exit 1
+fi
+echo "✅ Importmap audit passed!"
+echo ""
+
+echo "🎨 3. Running RuboCop linting..."
+if ! bin/rubocop; then
+    echo "❌ RuboCop failed!"
+    echo "💡 Run 'bin/rubocop -a' to auto-fix issues"
+    exit 1
+fi
+echo "✅ RuboCop passed!"
+echo ""
+
+echo "🧪 4. Running tests..."
+if ! bin/rails test; then
+    echo "❌ Tests failed!"
+    exit 1
+fi
+echo "✅ Tests passed!"
+echo ""
+
+echo "🎉 All CI checks passed! Ready to push! 🚀"
