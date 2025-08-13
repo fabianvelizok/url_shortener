@@ -15,14 +15,14 @@ class ViewIntegrationTest < ActionDispatch::IntegrationTest
 
   test "accessing short URL creates a view record" do
     assert_difference "View.count", 1 do
-      get view_path(@link)
+      get view_path(@link), headers: { "HTTP_USER_AGENT" => "Test Browser" }
     end
 
     # Check the view was recorded with correct data
     view = View.last
     assert_equal @link, view.link
-    assert_present view.ip
-    assert_present view.user_agent
+    assert_not_nil view.ip
+    assert_not_nil view.user_agent
   end
 
   test "accessing short URL increments views counter" do
@@ -35,18 +35,23 @@ class ViewIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "multiple accesses create multiple view records" do
+    sign_in(@user)
+    post links_path, params: { link: { url: "https://test-multiple-views.com" } }
+    new_link = Link.last
+    sign_out(@user)
+
     # First access
     assert_difference "View.count", 1 do
-      get view_path(@link)
+      get view_path(new_link)
     end
 
     # Second access
     assert_difference "View.count", 1 do
-      get view_path(@link)
+      get view_path(new_link)
     end
 
-    # Should have 2 view records for this link
-    assert_equal 2, @link.views.count
+    # Should have exactly 2 view records for this new link
+    assert_equal 2, new_link.views.count
   end
 
   test "short URL works without authentication" do
