@@ -2,8 +2,10 @@ class LinksController < ApplicationController
   before_action :set_link, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @links = current_user.links
+    @pagy, @links = pagy(current_user.links)
     @link ||= Link.new
+  rescue Pagy::OverflowError
+    redirect_to root_path(page: 1)
   end
 
   def create
