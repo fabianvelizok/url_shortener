@@ -15,3 +15,11 @@ two:
   image: 
   views_count: 2
   user: two
+
+three:
+  url: https://rubyonrails.org/
+  title: Ruby On Rails
+  description: Compress the complexity of modern web apps
+  image: 
+  views_count: 3
+  user: one
