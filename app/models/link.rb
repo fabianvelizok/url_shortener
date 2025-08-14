@@ -35,14 +35,4 @@ class Link < ApplicationRecord
   def has_metadata?
     title || description || image
   end
-
-  # Helper method for manually triggering metadata refresh
-  def refresh_metadata!
-    MetadataJob.perform_later(to_param)
-  end
-
-  # Helper method for immediate metadata refresh (useful for testing)
-  def refresh_metadata_now!
-    MetadataJob.perform_now(to_param)
-  end
 end
