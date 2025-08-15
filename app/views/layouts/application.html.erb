@@ -24,16 +24,25 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <header class="bg-gradient-to-r from-green-400 to-indigo-500">
+  <body class="bg-stone-50 dark:bg-slate-900 text-slate-900 dark:text-stone-100 transition-colors duration-200">
+    <header class="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 border-b border-stone-200 dark:border-slate-700">
       <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-        <%= link_to "URL Shortener", root_path, class: "py-5 flex" %>
-        <nav class="flex items-center gap-2">
+        <%= link_to "URL Shortener", root_path, class: "py-2 flex text-white font-bold text-xl" %>
+        <nav class="flex items-center gap-3">
+          <button data-controller="dark-mode" data-action="click->dark-mode#toggle" 
+                  class="p-2 rounded-lg border border-white/20 text-white hover:bg-white/10 transition-colors">
+            <span data-dark-mode-target="icon">
+              <!-- Icon is set by stimulus controller -->
+            </span>
+          </button>
+          
           <% if user_signed_in? %>
-            <span class="text-white"><%= current_user.email %></span>
-            <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "text-sm text-white rounded-lg border px-3 py-2 hover:text-gray-200" %>
+            <%= link_to current_user.email, edit_user_registration_path, class: "text-stone-200 hover:underline" %>
+            <%= button_to "Sign out", destroy_user_session_path, method: :delete, 
+                          class: "text-sm bg-sky-600 hover:bg-sky-700 text-white rounded-lg px-3 py-2 transition-colors" %>
           <% else %>
-            <%= link_to "Sign in", new_user_session_path, class: "text-sm text-white rounded-lg border px-3 py-2 hover:text-gray-200" %>
+            <%= link_to "Sign in", new_user_session_path, 
+                        class: "text-sm bg-sky-600 hover:bg-sky-700 text-white rounded-lg px-3 py-2 transition-colors" %>
           <% end %>
         </nav>
       </div>
@@ -41,7 +50,7 @@
 
     <%= render "shared/flash" %>
     
-    <main class="container mx-auto px-5 flex mt-5">
+    <main class="container mx-auto px-5 flex my-5">
       <%= yield %>
     </main>
   </body>

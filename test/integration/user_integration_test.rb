@@ -20,7 +20,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     follow_redirect!
 
     # Check that user email appears in navbar
-    assert_select "nav span", text: @user.email
+    assert_select "nav a", text: @user.email
     assert_select "nav", text: /Sign out/
   end
 
@@ -30,7 +30,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     # Verify user is signed in
     get root_path
     assert_response :success
-    assert_select "nav span", text: @user.email
+    assert_select "nav a", text: @user.email
 
     # Sign out using the button
     delete destroy_user_session_path
@@ -45,7 +45,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     # Should now see sign in link instead of email
     assert_select "nav a", text: "Sign in"
-    assert_select "nav span", text: @user.email, count: 0
+    assert_select "nav a", text: @user.email, count: 0
   end
 
   test "unauthenticated user sees sign in link in navbar" do
@@ -57,7 +57,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     # Should see sign in link in navbar
     assert_select "nav a", text: "Sign in"
-    assert_select "nav span", count: 0  # No email shown
+    assert_select "nav a", text: @user.email, count: 0
   end
 
   test "user cannot sign in with invalid credentials" do
@@ -71,6 +71,6 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     # Should still be on sign in page, no email in navbar
     assert_select "nav a", text: "Sign in"
-    assert_select "nav span", text: @user.email, count: 0
+    assert_select "nav a", text: @user.email, count: 0
   end
 end
