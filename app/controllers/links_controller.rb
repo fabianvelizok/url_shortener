@@ -26,6 +26,9 @@ class LinksController < ApplicationController
   end
 
   def show
+    @pagy_views, @views = pagy(@link.views.ordered, items: 20, page_param: :views_page)
+  rescue Pagy::OverflowError
+    redirect_to @link
   end
 
   def edit
