@@ -57,7 +57,10 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_url_options = { host: ENV.fetch("HOST") }
+
+  # Set default URL options for background renders (Turbo broadcasts)
+  Rails.application.routes.default_url_options = { host: ENV.fetch("HOST"), protocol: "https" }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {
@@ -83,7 +86,7 @@ Rails.application.configure do
   #   "example.com",     # Allow requests from example.com
   #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
   # ]
-  config.hosts << "go.fabianveliz.com"
+  config.hosts << ENV.fetch("HOST")
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
