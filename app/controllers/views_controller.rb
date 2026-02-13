@@ -6,7 +6,7 @@ class ViewsController < ApplicationController
     # Validate URL before redirecting
     safe_url = validate_and_sanitize_url(@link.url)
 
-    @link.views.create!(ip: request.ip, user_agent: request.user_agent)
+    @link.views.create!(ip: request.ip, user_agent: request.user_agent, referrer: request.referer)
     redirect_to safe_url, allow_other_host: true
   end
 

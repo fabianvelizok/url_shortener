@@ -13,8 +13,15 @@
 
   <%= link_to @link.url, @link.url, target: :_blank, data: { turbo: false }, class: "text-lg mb-3 text-sky-600 dark:text-sky-400 hover:underline block" %>
   
-  <div class="mb-3 text-slate-600 dark:text-slate-400">
-    <%= pluralize(@link.views_count, "view") %>
+  <div class="mb-3 grid grid-cols-2 gap-3">
+    <div class="bg-stone-100 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 rounded-lg p-3">
+      <div class="text-2xl font-bold text-slate-900 dark:text-stone-100"><%= @link.views_count %></div>
+      <div class="text-sm text-slate-600 dark:text-slate-400">Total Views</div>
+    </div>
+    <div class="bg-stone-100 dark:bg-slate-800 border border-stone-200 dark:border-slate-700 rounded-lg p-3">
+      <div class="text-2xl font-bold text-slate-900 dark:text-stone-100"><%= @link.unique_views_count %></div>
+      <div class="text-sm text-slate-600 dark:text-slate-400">Unique Visitors</div>
+    </div>
   </div>
 
   <div class="mb-3 flex justify-between">
@@ -44,6 +51,54 @@
   <div class="mb-6">
     <%= line_chart @link.views.group_by_day(:created_at, range: 2.weeks.ago..Time.now).count %>
     <p class="text-sm text-slate-400 dark:text-slate-500 mb-4 mt-4">This chart shows the number of views for the link over the past two weeks.</p>
+  </div>
+
+  <% if @link.top_referrers.any? %>
+    <div class="mb-6">
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-stone-100 mb-2">Top Referrers</h2>
+      <%= pie_chart @link.top_referrers, donut: true %>
+    </div>
+  <% end %>
+
+  <div class="mb-6">
+    <h2 class="text-lg font-semibold text-slate-900 dark:text-stone-100 mb-3">Recent Clicks</h2>
+
+    <% if @views.any? %>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-stone-200 dark:divide-slate-700">
+          <thead class="bg-stone-50 dark:bg-slate-800">
+            <tr>
+              <th class="px-3 py-2 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase">Time</th>
+              <th class="px-3 py-2 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase">Referrer</th>
+              <th class="px-3 py-2 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase">User Agent</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-stone-200 dark:divide-slate-700">
+            <% @views.each do |view| %>
+              <tr>
+                <td class="px-3 py-2 whitespace-nowrap text-sm text-slate-900 dark:text-slate-100">
+                  <%= view.created_at.strftime("%b %d, %Y %I:%M %p") %>
+                </td>
+                <td class="px-3 py-2 text-sm text-slate-600 dark:text-slate-400 max-w-40 truncate" title="<%= view.referrer %>">
+                  <%= view.referrer.present? ? view.referrer : "Direct" %>
+                </td>
+                <td class="px-3 py-2 text-sm text-slate-600 dark:text-slate-400 max-w-40 truncate" title="<%= view.user_agent %>">
+                  <%= view.user_agent&.truncate(50) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <% if @pagy_views.pages > 1 %>
+        <div class="mt-4">
+          <%== pagy_nav(@pagy_views) %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-slate-500 dark:text-slate-400 text-sm">No clicks recorded yet.</p>
+    <% end %>
   </div>
 
   <div class="flex items-center gap-2">

@@ -68,4 +68,42 @@ class ViewIntegrationTest < ActionDispatch::IntegrationTest
 
     assert_response :not_found
   end
+
+  test "accessing short URL captures referrer" do
+    get view_path(@link), headers: { "HTTP_REFERER" => "https://example.com/page" }
+
+    view = View.last
+    assert_equal "https://example.com/page", view.referrer
+  end
+
+  test "accessing short URL without referrer stores nil" do
+    get view_path(@link)
+
+    view = View.last
+    assert_nil view.referrer
+  end
+
+  test "first view from unique IP increments unique_views_count" do
+    link = create_link("https://test-unique.com")
+
+    assert_equal 0, link.unique_views_count
+
+    get view_path(link)
+    link.reload
+    assert_equal 1, link.unique_views_count
+
+    # Same IP again — should not increment
+    get view_path(link)
+    link.reload
+    assert_equal 1, link.unique_views_count
+  end
+
+  private
+
+  def create_link(url)
+    sign_in(@user)
+    post links_path, params: { link: { url: url } }
+    sign_out(@user)
+    Link.last
+  end
 end

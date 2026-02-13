@@ -77,4 +77,16 @@ class LinkTest < ActiveSupport::TestCase
     )
     assert_not link.has_metadata?
   end
+
+  test "top_referrers returns grouped referrer counts sorted by most frequent" do
+    link = Link.create(user: users(:one), url: "https://valid_url.com")
+    link.views.create!(ip: "1.1.1.1", referrer: "https://google.com")
+    link.views.create!(ip: "1.1.1.2", referrer: "https://google.com")
+    link.views.create!(ip: "1.1.1.3", referrer: "https://twitter.com")
+    link.views.create!(ip: "1.1.1.4", referrer: nil)
+    link.views.create!(ip: "1.1.1.5", referrer: "")
+
+    top = link.top_referrers
+    assert_equal({ "https://google.com" => 2, "https://twitter.com" => 1 }, top)
+  end
 end

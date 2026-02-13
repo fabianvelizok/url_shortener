@@ -35,4 +35,8 @@ class Link < ApplicationRecord
   def has_metadata?
     title || description || image
   end
+
+  def top_referrers(limit = 5)
+    views.where.not(referrer: [ nil, "" ]).group(:referrer).order("count_all DESC").limit(limit).count
+  end
 end
