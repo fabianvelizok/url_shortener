@@ -62,6 +62,6 @@ gem "chartkick"
 
 gem "groupdate", "~> 6.7"
 
-gem "sucker_punch", "~> 3.2"
+gem "sucker_punch", "~> 3.3"
 
 gem "pagy", "~> 9.4"
